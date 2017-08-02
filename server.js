@@ -36,7 +36,8 @@ app.get("/new/:url*", (req, res) => {
     original_url = original_url.toString();
   }
   catch(err) {
-    output = {error: true, invalid_url: err};
+    console.log('Failed Input Attempt: ', err);
+    res.json({ error: true, invalid_url: err.input });
   }
   
   if (original_url) {
@@ -44,26 +45,24 @@ app.get("/new/:url*", (req, res) => {
       .count({})
       .then( collectionLen => {
         collection
-          .find( {original_url })
+          .find({ original_url })
           .toArray()
           .then( results => {
             if (results.length) {
               output = { original_url, short_url: results[0].short_url };
-              console.log('Success Output: ', output);
+              console.log('Serving url from db: ', output);
               res.json(output);
             }
             else {
               output = { original_url, short_url: shortUrlBase + shortEndPath(collectionLen) };
-              console.log('New Doc Pre-Insert', JSON.stringify(output));
               collection
                 .insert(output)
                 .then( () => res.json({ original_url: output.original_url, short_url: output.short_url }) );
-              console.log('New Doc', output);
+              console.log('Serving new url: ', output);
             }
           });
       });
   } 
-  else res.json(output); 
 });
 
 app.get("/:redir", (req, res) => {
