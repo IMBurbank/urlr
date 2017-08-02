@@ -1,27 +1,45 @@
-Welcome to the Glitch BETA
+urlr - A URL Shortener Microservice
 =========================
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+**Tired of dealing with unruly, long urls?**
 
-**Glitch** is the friendly commmunity where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+This microservice can shorten those urls for you. Save the `short_url` provided and use it to redirect to your original url any time!
 
-Find out more [about Glitch](https://glitch.com/about).
+All urls must start with the the protocol `https://` or `http://`
+
+There are two ways to use this microservice:
+
+----------------
+
+## URL Endpoint
+Enter a url you would like shortened into your browser as a path of the base domain `https://urlr.glitch.me/new/`
+
+**Example Input**
+
+``https://urlr.glitch.me/new/https://news.google.com``
+
+**Example Output**
+
+`{"original_url":"https://news.google.com/","short_url":"https://urlr.glitch.me/a9"}`
 
 
-Your Project
-------------
+## Form Input
+Form input option is available at the landing page [https://urlr.glitch.me/](https://urlr.glitch.me/).
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+Just enter a url you would like shortened into the form on the landing page.
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+**Example Input**
 
+`https://news.google.com`
 
-Made by [Fog Creek](https://fogcreek.com/)
+**Example Output**
+
+`{"original_url":"https://news.google.com/","short_url":"https://urlr.glitch.me/a9"}`
+
+----------------
+
+Check out [the landing page](https://urlr.glitch.me/).
+
+Made by [IMBurbank](https://github.com/IMBurbank)
 -------------------
 
-\ ゜o゜)ノ

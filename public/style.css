@@ -15,21 +15,26 @@ body {
 
 h1 {
   font-weight: bold;
-  color: pink;
+  text-decoration: underline;
+  color: #068799;
 }
 
-.bold {
+h3 {
   font-weight: bold;
+  margin: 1.25em 0 .5em 0;
+  color: #068799;
 }
 
 p {
   max-width: 600px;
+  margin: 0 0 .25em 1em;
+  font-size: .9rem;
 }
 
 form {
-  margin-bottom: 25px;
+  margin: 1rem 0;
   padding: 15px;
-  background-color: cyan;
+  background-color: #7ded80;
   display: inline-block;
   width: 100%;
   max-width: 340px;
@@ -49,7 +54,7 @@ input {
 button {
   font-size: 16px;
   border-radius: 3px;
-  background-color: lightgrey;
+  background-color: #69dbf4;
   border: 1px solid grey;
   box-shadow: 2px 2px teal;
   cursor: pointer;
@@ -77,6 +82,25 @@ footer > a {
   color: #BBBBBB;
 }
 
-.nicejob {
-  text-decoration: line-through;
+.sub-section {
+  margin-left: .5rem
+}
+
+.bold {
+  margin: .5em 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #068799;
+}
+
+.short-code, .output-container {
+  background: #eff7f9;
+}
+
+.form-description {
+  margin: 0 0 .5em 0;
+}
+
+.output-container {
+  font-size: .9rem;
 }
