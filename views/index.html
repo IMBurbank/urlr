@@ -1,18 +1,11 @@
-<!-- This is a static file -->
-<!-- served from your routes in server.js -->
-
-<!-- You might want to try something fancier: -->
-<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
-<!-- pug: https://pugjs.org/ -->
-<!-- haml: http://haml.info/ -->
-<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+<!-- served from route in server.js -->
 
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Welcome to Glitch!</title>
-    <meta name="description" content="A cool thing made with Glitch">
-    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <title>urlr - URL Shortener</title>
+    <meta name="description" content="A URL Shortener Microservice">
+    <link id="favicon" rel="icon" href="https://cdn.glitch.com/07f3e2d0-a5eb-4f53-af4b-79bef6ce6113%2Ffavicon.ico?1501702431716" type="image/x-icon">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,33 +14,85 @@
   <body>
     <header>
       <h1>
-        A Dream of the Future
+        urlr - A URL Shortener Microservice
       </h1>
     </header>
 
     <main>
-      <p class="bold">Oh hi,</p>
-      <p>Tell me your hopes and dreams:</p>
-      <form>
-        <input type="text" maxlength="100" placeholder="Dreams!">
+      <section class="sub-section">
+      <p class="bold">Tired of dealing with unruly, long urls?</p>
+      <p>
+        This microservice can shorten those urls 
+        for you. Save the <span class="short-code">short_url</span> provided and use it 
+        to redirect to your original url any time!
+      </p>
+      <p>
+        All urls must start with the the 
+        protocol <span class="short-code">https://</span> or <span class="short-code">http://</span>
+      </p>
+      <br/>
+      <p>There are two ways to use this microservice:</p>
+      </section>
+      
+      <h3>
+        URL Endpoint
+      </h3>
+      <section class="sub-section">
+        <p>
+          Enter a url you would like shortened into your browser as a path of the 
+          base domain <span class="short-code">https://urlr.glitch.me/new/</span>
+        </p>
+        <p class="bold">Example Input</p>
+        <p>
+          <span class="short-code">https://urlr.glitch.me/new/https://news.google.com</span>
+        </p>
+        <p class="bold">Example Output</p>
+        <p>
+          <span class="short-code">
+            {"original_url":"https://news.google.com/","short_url":"https://urlr.glitch.me/a9"}
+          </span>
+        </p>  
+      </section>
+          
+      <h3>
+        Form Input
+      </h3>
+      <section class="sub-section">
+        <p>Enter a url you would like shortened into the input box below.</p>
+        <p class="bold">Example Input</p>
+        <p>
+          <span class="short-code">https://news.google.com</span>
+        </p>
+        <p class="bold">Example Output</p>
+        <p>
+          <span class="short-code">
+            {"original_url":"https://news.google.com/","short_url":"https://urlr.glitch.me/a9"}
+          </span>
+        </p>      
+      </section>
+     
+      <form id="url-form">
+        <p class="form-description">URL Shortener Form:</p>
+        <input id="input" type="text" maxlength="240" placeholder="https://domain-name.com">
         <button type="submit">Submit</button>
       </form>
-      <section class="dreams">
-        <ul id="dreams">
+      
+      <section class="output-container">
+        <ul id="output">
         </ul>
       </section>
     </main>
 
     <footer>
-      <a href="https://glitch.com">
-        Remix this in Glitch
+      <a href="https://github.com/IMBurbank/urlr">
+        Github Repo
       </a>
     </footer>
 
-    <!-- Your web-app is https, so your scripts need to be too -->
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+    <!-- Scripts -->
+    <!-- <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script> -->
     <script src="/client.js"></script>
 
   </body>
