@@ -36,7 +36,7 @@ app.get("/new/:url*", (req, res) => {
     original_url = original_url.toString();
   }
   catch(err) {
-    console.log('Failed Input Attempt: ', err);
+    console.log('Failed URL Input Attempt: ', err);
     res.json({ error: true, invalid_url: err.input });
   }
   
@@ -57,21 +57,24 @@ app.get("/new/:url*", (req, res) => {
               output = { original_url, short_url: shortUrlBase + shortEndPath(collectionLen) };
               collection
                 .insert(output)
-                .then( () => res.json({ original_url: output.original_url, short_url: output.short_url }) );
+                .then( () => res.json({ original_url: output.original_url, short_url: output.short_url }) )
+                .catch( err => console.error(err) );
               console.log('Serving new url: ', output);
             }
-          });
-      });
+          })
+          .catch( err => console.error(err) );
+      })
+      .catch( err => console.error(err) );
   } 
 });
 
-app.get("/:redir", (req, res) => {
-  let short_url = shortUrlBase + req.params.redir;
+app.get("/:redir*", (req, res) => {
+  let short_url = shortUrlBase + req.params.redir + req.params[0];
   
   collection
     .find({ short_url })
     .toArray( (err, results) => {
-      if (err) throw err;  
+      if (err) console.error(err);  
       if (results.length) res.redirect(results[0].original_url);
       else res.json({ error: true, invalid_short_url: short_url });
     });
