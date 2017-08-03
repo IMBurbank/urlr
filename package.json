@@ -11,7 +11,7 @@
     "mongodb": "^2.2.30"
   },
   "engines": {
-    "node": "8.x"
+    "node": "8.0.x"
   },
   "repository": {
     "url": "https://github.com/IMBurbank/urlr"

@@ -9,7 +9,7 @@ const app = express(),
       dbUrl = 'mongodb://guest:default@ds129143.mlab.com:29143/fcc-apis',
       shortUrlBase = 'https://urlr.glitch.me/';
 
-let collection, db, listener, original_url, output, short_url;
+let collection, db, listener;
 
 
 const shortEndPath = function createShortEndPath(collectionLen) {
@@ -27,45 +27,27 @@ app.use(express.static('public'));
 
 app.get("/", (req, res) => res.sendFile(__dirname + '/views/index.html'));
 
-app.get("/new/:url*", (req, res) => {
-  let original_url = '',
-      short_url = '';
+app.get("/new/:url*", async (req, res) => {
+  let original_url;
   
   try {
     original_url = new URL(req.params.url + req.params[0]);
-    original_url = original_url.toString();
+    original_url = original_url.toString();   
+    
+    const collectionLen = await collection.count({});
+    const results = await collection.find({ original_url }).toArray();
+    const output = results.length ?
+      { original_url, short_url: results[0].short_url } :
+      { original_url, short_url: shortUrlBase + shortEndPath(collectionLen) };
+
+    if (!results.length) collection.insert(Object.assign({}, output));
+    console.log('Successful Request: ', output);
+    res.json(output);
   }
   catch(err) {
-    console.log('Failed URL Input Attempt: ', err);
+    console.error('Failed URL Input Attempt: ', err);
     res.json({ error: true, invalid_url: err.input });
   }
-  
-  if (original_url) {
-    collection
-      .count({})
-      .then( collectionLen => {
-        collection
-          .find({ original_url })
-          .toArray()
-          .then( results => {
-            if (results.length) {
-              output = { original_url, short_url: results[0].short_url };
-              console.log('Serving url from db: ', output);
-              res.json(output);
-            }
-            else {
-              output = { original_url, short_url: shortUrlBase + shortEndPath(collectionLen) };
-              collection
-                .insert(output)
-                .then( () => res.json({ original_url: output.original_url, short_url: output.short_url }) )
-                .catch( err => console.error(err) );
-              console.log('Serving new url: ', output);
-            }
-          })
-          .catch( err => console.error(err) );
-      })
-      .catch( err => console.error(err) );
-  } 
 });
 
 app.get("/:redir*", (req, res) => {
@@ -80,7 +62,6 @@ app.get("/:redir*", (req, res) => {
     });
   console.log('Redirect Request: ', short_url);
 });
-
 
 MongoClient.connect(dbUrl, (err, database) => {
   if (err) throw err;
