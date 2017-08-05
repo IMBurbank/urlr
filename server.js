@@ -41,13 +41,9 @@ app.get("/new/:url*", async (req, res) => {
       { original_url, short_url: shortUrlBase + shortEndPath(collectionLen) };
 
     if (!results.length) collection.insert(Object.assign({}, output));
-    console.log('Successful Request: ', output);
     res.json(output);
   }
-  catch(err) {
-    console.error('Failed URL Input Attempt: ', err);
-    res.json({ error: true, invalid_url: err.input });
-  }
+  catch(err) { res.json({ error: true, invalid_url: err.input }) }
 });
 
 app.get("/:redir*", (req, res) => {
@@ -60,7 +56,6 @@ app.get("/:redir*", (req, res) => {
       if (results.length) res.redirect(results[0].original_url);
       else res.json({ error: true, invalid_short_url: short_url });
     });
-  console.log('Redirect Request: ', short_url);
 });
 
 MongoClient.connect(dbUrl, (err, database) => {
